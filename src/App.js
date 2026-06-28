@@ -23,6 +23,23 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email) return;
+    setSending(true);
+    try {
+      const res = await fetch("https://formspree.io/f/maqgbwba", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, message: form.message }),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch (e) {
+      alert("Something went wrong. Please try again.");
+    }
+    setSending(false);
+  };
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -303,7 +320,7 @@ export default function App() {
                   <input className="form-input" placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} />
                   <input className="form-input" placeholder="Email address" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} />
                   <textarea className="form-input" placeholder="Tell us about your business and what you're looking for..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})} />
-                  <button className="btn-primary" onClick={()=>{if(form.name&&form.email)setSubmitted(true);}}>Send Message</button>
+                  <button className="btn-primary" onClick={handleSubmit} disabled={sending}>{sending ? "Sending..." : "Send Message"}<</button>
                 </>
               )}
             </div>
