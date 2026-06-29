@@ -320,7 +320,7 @@ export default function App() {
                   <input className="form-input" placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} />
                   <input className="form-input" placeholder="Email address" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} />
                   <textarea className="form-input" placeholder="Tell us about your business and what you're looking for..." value={form.message} onChange={e=>setForm({...form,message:e.target.value})} />
-                  <button className="btn-primary" onClick={handleSubmit} disabled={sending}>{sending ? "Sending..." : "Send Message"}<</button>
+                  <button className="btn-primary" onClick={handleSubmit} disabled={sending}>{sending ? "Sending..." : "Send Message"}</button>
                 </>
               )}
             </div>
